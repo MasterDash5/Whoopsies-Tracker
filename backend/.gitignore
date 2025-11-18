@@ -34,8 +34,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# no typescript builds
-*.js
-*.map
-*.d.ts
+dist
