@@ -24,3 +24,35 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.dark-purple {
+  color: "#21094E";
+}
+
+.light-purple {
+  color: "#511281";
+}
+
+.dark-green {
+  color: "#4CA1A3";
+}
+
+.light-green {
+  color: "A5E1AD";
+}
+
+.dark-purple-bg {
+  background-color: "#21094E";
+}
+
+.light-purple-bg {
+  background-color: "#511281";
+}
+
+.dark-green-bg {
+  background-color: "#4CA1A3";
+}
+
+.light-green-bg {
+  background-color: "A5E1AD";
+}
