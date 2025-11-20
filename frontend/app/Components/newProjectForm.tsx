@@ -1,11 +1,11 @@
 ﻿import Form from "next/form";
-import Button from "@/app/Components/button";
+
 type prompts = {
     className : string;
 }
-function OnSubmit(){
-    /*submit data to backend (i think)*/
-    console.log("the stuff")
+function OnSubmit() {
+    /*submit data to backend*/
+
 }
 export default function NewProjectForm(
     {className}: { className?: string }
