@@ -1,6 +1,5 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import { readFileSync } from 'fs';
-import { Database } from './database'
 
 interface Project {
     id: number;
@@ -17,4 +16,18 @@ export async function getProjects(): Promise<Project[]> {
     if (error) throw error;
 
     return data;
+}
+
+export async function getProject(id: string): Promise<Project> {
+    const { data, error } = await supabase.from('project').select('id,name').eq('id', id).single();
+
+    if (error) throw error;
+
+    console.log("no error")
+
+    return data;
+}
+
+export async function addProject(name: string): Promise<void> {
+    await supabase.from('project').insert({ name: name })
 }
