@@ -22,9 +22,7 @@ export async function getProject(id: string): Promise<Project> {
     const { data, error } = await supabase.from('project').select('id,name').eq('id', id).single();
 
     if (error) throw error;
-
-    console.log("no error")
-
+    
     return data;
 }
 
