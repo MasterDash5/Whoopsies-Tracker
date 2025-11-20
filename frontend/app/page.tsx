@@ -1,5 +1,6 @@
 "use client";
 import { useEffect } from "react";
+import NewProjectForm from "@/app/Components/newProjectForm";
 
 type Project = {
   id: number;
@@ -36,9 +37,9 @@ export default function Home() {
           ))}
         </div>
 
-        <button className="p-4 rounded-full absolute bottom-4 border-2 w-44">
-          Create Project
-        </button>
+        <div>
+          <NewProjectForm  className={"p-4 rounded-full bottom-4 border-2 w-44"}/>
+        </div>
       </div>
 
       <div className="flex flex-col items-center justify-center w-full dark-purple-bg">
