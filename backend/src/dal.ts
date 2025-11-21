@@ -29,7 +29,7 @@ export async function getProjects(): Promise<Project[]> {
     return data;
 }
 
-export async function getProject(id: string): Promise<Project extends Id> {
+export async function getProject(id: string): Promise<Project> {
     const { data, error } = await supabase.from('project').select('id,name').eq('id', id).single();
 
     if (error) throw error;
