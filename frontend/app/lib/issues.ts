@@ -10,7 +10,7 @@ type Issue = {
 }
 
 export async function addIssue(issues: Issue): Promise<void> {
-    fetch('/issues', {
+    fetch('localhost:3000/issues', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -20,7 +20,7 @@ export async function addIssue(issues: Issue): Promise<void> {
 }
 
 export async function updateIssue(issues: Issue): Promise<void> {
-    fetch('/issues', {
+    fetch('localhost:3000/issues', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -31,11 +31,11 @@ export async function updateIssue(issues: Issue): Promise<void> {
 }
 
 export async function getIssues(project_id: string): Promise<Issue[]> {
-    const response = await fetch(`/issues/${project_id}`);
+    const response = await fetch(`localhost:3000/issues/${project_id}`);
     return await response.json();
 }
 
 export async function getIssue(id: string): Promise<Issue> {
-    const response = await fetch(`/issue/${id}`);
+    const response = await fetch(`localhost:3000/issue/${id}`);
     return await response.json();
 }
