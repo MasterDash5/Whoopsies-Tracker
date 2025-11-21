@@ -19,6 +19,13 @@ const mockdata: Project[] = [
 export default function Home() {
   useEffect(() => {}, []);
 
+  function submitProject() {
+      /*backend stuff*/
+  }
+  function submitIssue(){
+      /*backend stuff*/
+  }
+
   const projects: Project[] = [];
 
   return (
@@ -38,14 +45,23 @@ export default function Home() {
         </div>
 
         <div>
-          <NewProjectForm  className={"p-4 rounded-full bottom-4 border-2 w-44"}/>
+            <form onSubmit={submitProject}>
+                <input name="projectName" type="text" placeholder="My New Project" />
+                <button title={"Create new Project"} className="p-4 rounded-full bottom-4 border-2 w-44" type={"submit"}>Create new Project</button>
+            </form>
         </div>
       </div>
 
       <div className="flex flex-col items-center justify-center w-full dark-purple-bg">
         {projects.length === 0 && (
           <div className="backdrop-blur-2xl p-4 border rounded-2xl">
-            No projects Created
+              <form action={submitIssue}>
+                  {/* put current project here */}
+
+                  <input name="issueName" type="text" placeholder="Issue Name" />
+                  <input name="issueDescription" type="text" placeholder="New Issue Description" />
+                  <button title={"Submit Issue"} className="p-4 rounded-full bottom-4 border-2 w-44" type={"submit"}>Submit Issue</button>
+              </form>
           </div>
         )}
       </div>
