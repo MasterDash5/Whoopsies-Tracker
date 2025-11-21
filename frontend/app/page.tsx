@@ -1,6 +1,43 @@
+<<<<<<< Updated upstream
 import Image from "next/image";
+=======
+"use client";
+import { useEffect } from "react";
+import NewProjectForm from "@/app/Components/newProjectForm";
+import Button from "@/app/Components/button";
+
+type Project = {
+  id: number;
+  name: string;
+};
+
+const mockdata: Project[] = [
+  { id: 1, name: "Project 1" },
+  { id: 2, name: "Project 2" },
+  { id: 3, name: "Project 3" },
+  { id: 4, name: "Project 4" },
+  { id: 5, name: "Project 5" },
+  { id: 6, name: "Project 6" },
+];
+>>>>>>> Stashed changes
+
 
 export default function Home() {
+<<<<<<< Updated upstream
+=======
+  useEffect(() => {}, []);
+  function submitProject() {
+        /*submit data to backend*/
+
+  }
+  function submitIssue() {
+        /*submit data to backend*/
+
+  }
+
+  const projects: Project[] = [];
+
+>>>>>>> Stashed changes
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
@@ -59,7 +96,35 @@ export default function Home() {
             Documentation
           </a>
         </div>
+<<<<<<< Updated upstream
       </main>
+=======
+
+        <div>
+            <form onSubmit={submitProject}>
+                <input name="projectName" type="text" placeholder="My New Project" />
+                <button title={"Create new Project"} className="p-4 rounded-full bottom-4 border-2 w-44" type={"submit"}>Create new Project</button>
+            </form>
+        </div>
+      </div>
+
+      <div className="flex flex-col items-center justify-center w-full dark-purple-bg">
+        {projects.length === 0 && (
+          <div className="backdrop-blur-2xl p-4 border rounded-2xl">
+              <form action={submitIssue}>
+                  Put selected project tab here to send to backend
+
+                  <input name="issueName" type="text" placeholder="Issue Name" />
+                  <input name="issueDescription" type="text" placeholder="New Issue Description" />
+
+
+                  id, timestamp, timestamp for resolved, description, project
+                  <button title={"Submit Issue"} className="p-4 rounded-full bottom-4 border-2 w-44" type={"submit"}>Submit Issue</button>
+              </form>
+          </div>
+        )}
+      </div>
+>>>>>>> Stashed changes
     </div>
   );
 }
