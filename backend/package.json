@@ -16,5 +16,8 @@
     "@types/node": "^24.10.1",
     "express": "^5.1.0",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.1"
   }
 }
