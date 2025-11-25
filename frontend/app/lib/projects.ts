@@ -4,13 +4,13 @@ type Project = {
     id?: number
 }
 
-export async function addProject(project: Project): Promise<void> {
-    await fetch('localhost:3000/project', {
+export async function addProject(name: string): Promise<void> {
+    await fetch('http://10.10.17.128:3000/project', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(project)
+        body: JSON.stringify({ name })
     });
 }
 
