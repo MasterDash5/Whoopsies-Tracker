@@ -1,31 +1,29 @@
 "use client";
-import { create } from "domain";
 import { useEffect, useState } from "react";
-import { addProject } from "@/app/lib/projects";
+import { addProject, getProjects } from "@/app/lib/projects";
 type Project = {
   id: number;
   name: string;
 };
 
-const mockdata: Project[] = [
-  { id: 1, name: "Project 1" },
-  { id: 2, name: "Project 2" },
-  { id: 3, name: "Project 3" },
-  { id: 4, name: "Project 4" },
-  { id: 5, name: "Project 5" },
-  { id: 6, name: "Project 6" },
-];
-
 export default function Home() {
-  useEffect(() => {}, []);
-
-  const projects: Project[] = [];
   const [createProject, setCreateProject] = useState(false);
   const [projectName, setProjectName] = useState("");
+  const [projects, setProjects] = useState<Project[]>([]);
+
+  useEffect(() => {
+    async function fetchProjects() {
+      const projects = await getProjects();
+      setProjects(projects);
+    }
+    fetchProjects();
+  }, []);
 
   async function handleSubmit() {
     await addProject(projectName);
     setCreateProject(false);
+    const projects = await getProjects();
+    setProjects(projects);
   }
 
   const handleCreateProject = () => {
@@ -45,7 +43,7 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col overflow-y-scroll w-full">
-          {mockdata.map((project) => (
+          {projects.map((project) => (
             <div className="p-4 border-b-2" key={project.id}>
               {project.name}
             </div>

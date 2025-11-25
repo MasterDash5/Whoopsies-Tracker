@@ -15,7 +15,7 @@ export async function addProject(name: string): Promise<void> {
 }
 
 export async function getProjects(): Promise<Project[]> {
-    const response = await fetch('localhost:3000/projects');
+    const response = await fetch('http://10.10.17.128:3000/projects');
     if (!response.ok) {
         throw new Error('Failed to fetch projects');
     }
