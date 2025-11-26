@@ -3,33 +3,31 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Issue, getIssue } from "@/app/lib/issues";
+import { Project, getProject } from "@/app/lib/projects";
 
 export default function Home() {
     const params = useSearchParams();
     const id: string | null = params.get('id');
     const [issue, setIssue] = useState<Issue | null>(null);
+    const [project, setProject] = useState<Project | null>(null);
 
     useEffect(() => {
-        async function pullIssue() {
-            if (id != null) {
-                //const issue: Issue = await getIssue(id);
-                //setIssue(issue);
+        async function fetchIssue() {
+            if (id !== null) {
+                const issue = await getIssue(id);
+                setIssue(issue);
             }
         }
-
-        pullIssue();
+        fetchIssue();
     }, [id]);
 
-    /*
-    if (id === null || issue == null) {
-        return (
-            <div className="text-center mt-50 min-h-screen">
-                <h1>404 - Page Not Found</h1>
-                <p>The page you&apos;re looking for does not exist.</p>
-            </div>
-        )
-    }
-    */
+    useEffect(() => {
+        async function fetchProject() {
+            const project = await getProject(issue?.project_id);
+            getProject(project.);
+        }
+        fetchProject();
+    }, [issue]);
 
     return (
         <div className="flex">
@@ -43,7 +41,7 @@ export default function Home() {
                     <div>
                         <div className="flex justify-between">
                             <div>
-                                <p>Project name - {params.get('id')}</p>
+                                <p>Project name - {id}</p>
                                 <p className="text-3xl">Issue name</p>
                             </div>
                             <div>
