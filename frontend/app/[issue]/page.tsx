@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from 'next/router'
+import { useRouter } from "next/navigation";
 
 export default function Home() {
     const router = useRouter();
@@ -15,7 +15,7 @@ export default function Home() {
             <div className="flex flex-col items-center justify-center w-full">
                 <div>
                     <div>
-                        <p>Project name - {router.query.id}</p>
+                        <p>Project name - {}</p>
                         <h1>Issue name</h1>
                     </div>
                 </div>

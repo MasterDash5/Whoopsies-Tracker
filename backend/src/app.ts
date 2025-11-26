@@ -1,11 +1,15 @@
 import express, { Request, Response } from "express"
 import bodyParser from 'body-parser';
 import * as dal from "./dal"
+const cors = require("cors");
 
 const app = express();
 const port: number = 3000;
 
 app.use(bodyParser.json());
+app.use(cors({ origin: "http://localhost:3001" }));
+
+app.use(cors()); 
 
 app.get("/projects", async (req: Request, res: Response) => {
     res.json(await dal.getProjects())
