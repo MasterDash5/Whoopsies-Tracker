@@ -20,7 +20,6 @@ app.get("/project/:id", async (req: Request, res: Response) => {
 });
 
 app.post("/project", async (req: Request, res: Response) => {
-    console.log(req);
     await dal.addProject({
         id: 0, // ignored
         name: req.body.name

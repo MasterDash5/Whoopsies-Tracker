@@ -1,15 +1,34 @@
 "use client";
 import { useEffect, useState } from "react";
 import { addProject, getProjects } from "@/app/lib/projects";
+import { addIssue, getIssues } from "@/app/lib/issues";
+import { useRouter } from "next/navigation";
 type Project = {
   id: number;
   name: string;
 };
 
+type Issue = {
+  id: number;
+  project_id: number;
+  created_at: string;
+  resolved_at: string;
+  status: string;
+  title: string;
+  description: string;
+  commit: string;
+};
+
 export default function Home() {
   const [createProject, setCreateProject] = useState(false);
   const [projectName, setProjectName] = useState("");
+  const [issueName, setIssueName] = useState("");
+  const [issueDescription, setIssueDescription] = useState("");
+  const [issueCommit, setIssueCommit] = useState("");
   const [projects, setProjects] = useState<Project[]>([]);
+  const [currentProject, setCurrentProject] = useState<Project | null>(null);
+  const [issues, setIssues] = useState<Issue[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchProjects() {
@@ -19,11 +38,22 @@ export default function Home() {
     fetchProjects();
   }, []);
 
+  
+
   async function handleSubmit() {
     await addProject(projectName);
     setCreateProject(false);
     const projects = await getProjects();
     setProjects(projects);
+  }
+
+  async function handleCreateIssue() {
+    await addIssue({
+      project_id: currentProject!.id,
+      title: issueName,
+      description: issueDescription,
+      commit: issueCommit
+    })
   }
 
   const handleCreateProject = () => {
@@ -32,6 +62,16 @@ export default function Home() {
 
   const handleCancel = () => {
     setCreateProject(false);
+  }
+
+  const handleProjectSelect = async (project: Project) => {
+    setCurrentProject(project);
+    const issues = await getIssues(project.id.toString());
+    setIssues(issues);
+  }
+
+  async function handleIssueSelect(issue: Issue) {
+    router.push(`/${issue.id}`);
   }
 
   return (
@@ -44,9 +84,9 @@ export default function Home() {
 
         <div className="flex flex-col overflow-y-scroll w-full">
           {projects.map((project) => (
-            <div className="p-4 border-b-2" key={project.id}>
+            <button className="p-4 border-b-2 hover:bg-gray-100" key={project.id} onClick={() => handleProjectSelect(project)}>
               {project.name}
-            </div>
+            </button>
           ))}
         </div>
         <button className="p-4 border-b-2" onClick={handleCreateProject}>
@@ -73,6 +113,53 @@ export default function Home() {
               <button className="text-2xl border-2" onClick={handleCancel}>
                 X
               </button>
+            </div>
+          )
+        }
+
+        {
+          currentProject && (
+            <div className="flex flex-col items-center justify-center w-full">
+              <h1 className="text-2xl">{currentProject.name}</h1>
+              <form className="" onSubmit={handleCreateIssue}>
+                Add <i>issue</i>
+                <input
+                  className="p-4 border-2"
+                  type="text"
+                  placeholder="Issue name"
+                  value={issueName}
+                  onChange={(e) => setIssueName(e.target.value)}
+                />
+                <input
+                  className="p-4 border-2"
+                  type="text"
+                  placeholder="Issue description"
+                  value={issueDescription}
+                  onChange={(e) => setIssueDescription(e.target.value)}
+                  >
+                </input>
+                <input
+                  className="p-4 border-2"
+                  type="text"
+                  placeholder="Issue commit"
+                  value={issueCommit}
+                  onChange={(e) => setIssueCommit(e.target.value)}
+                  >
+                </input>
+                <button className="p-4 border-2" type="submit">
+                  Submit
+                </button>
+              </form>
+              {
+                issues.map((issue) => (
+                  <div className="" key={issue.id}>
+                    <h1 className="text-2xl">{issue.title}</h1>
+                    <p>{issue.description}</p>
+                    <p>{issue.commit}</p>
+                    <button className="p-4 border-2" onClick={() => handleIssueSelect(issue)}>Enter</button>
+                  </div>
+                ))
+              }
             </div>
           )
         }
