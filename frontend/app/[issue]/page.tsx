@@ -1,23 +1,58 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { Issue, getIssue } from "@/app/lib/issues";
 
 export default function Home() {
     const params = useSearchParams();
+    const id: string | null = params.get('id');
+    const [issue, setIssue] = useState<Issue | null>(null);
+
+    useEffect(() => {
+        async function pullIssue() {
+            if (id != null) {
+                //const issue: Issue = await getIssue(id);
+                //setIssue(issue);
+            }
+        }
+
+        pullIssue();
+    }, [id]);
+
+    /*
+    if (id === null || issue == null) {
+        return (
+            <div className="text-center mt-50 min-h-screen">
+                <h1>404 - Page Not Found</h1>
+                <p>The page you&apos;re looking for does not exist.</p>
+            </div>
+        )
+    }
+    */
 
     return (
-        <div className="flex flex-col min-h-screen">
-            <div className="flex items-center w-96 relative border-r-2">
-                <div className="w-full p-4 text-center border-b-2">
+        <div className="flex">
+            <div className="flex flex-col items-center w-96 border-r-2">
+                <div className="p-4 text-center border-b-2">
                     Projects tab
                 </div>
             </div>
-            <div className="flex items-center justify-center">
-                <div className="">
+            <div className="flex items-center justify-center w-full mt-16">
+                <div className="m-16">
                     <div>
-                        <p>Project name - {params.get('id')}</p>
-                        <p className="text-3xl">Issue name</p>
-                        <div className="p-16 w-3/4">
+                        <div className="flex justify-between">
+                            <div>
+                                <p>Project name - {params.get('id')}</p>
+                                <p className="text-3xl">Issue name</p>
+                            </div>
+                            <div>
+                                <p>Created (date)</p>
+                                <p>Resolved (date) OR Current status</p>
+                                <p>Commit</p>
+                            </div>
+                        </div>
+                        <div className="p-16 w-full">
                             <p>The Whimsical Dance of the Celestial Pups
 
 In the heart of the Flibbertygibbet Galaxy, where time pirouettes on the tips of hummingbird wings, a peculiar phenomenon unfolds each twilight. This is the annual celebration known as the Whimsical Dance of the Celestial Pups, a gathering where stardust meets the enchanted symphonies of lavender trees swaying in invisible zephyrs.
@@ -27,6 +62,7 @@ As night descends, skyward periwinkle clouds drift lazily, reflecting the shimme
 The Grand Cerulean Toadstool
 
 At the center of this effervescent festivity lies the Grand Cerulean Toadstool, a towering mushroom shaped like a teacup, from which a never-ending stream of grape soda cascades. This effervescent fountain serves as the stage for the dancing pups, who leap and twirl with unparalleled grace. They glide on their luminous tails, creating trails of shimmering fairy lights, illuminating the laughter that fills the air.</p>
+                            <p>attachments here</p>
                         </div>
                     </div>
                 </div>

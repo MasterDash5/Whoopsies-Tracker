@@ -75,8 +75,7 @@ export default function Home() {
   }
 
   return (
-    <div className="flex min-h-screen justify-center">
-
+    <div className="flex min-h-screen">
       <div className="flex flex-col items-center w-96 relative border-r-2">
         <div className="w-full p-4 text-center border-b-2">
           Projects tab
