@@ -35,7 +35,7 @@ export default function Home() {
   useEffect(() => {
     async function fetchProjects() {
       const projects = await getProjects();
-      setProjects(projects);
+      setProjects(projects?[]:[]);
     }
     fetchProjects();
   }, []);
@@ -44,7 +44,7 @@ export default function Home() {
     await addProject(projectName);
     setCreateProject(false);
     const updated = await getProjects();
-    setProjects(updated);
+    setProjects(updated?[]:[]);
   }
 
   async function handleCreateIssue() {
@@ -55,7 +55,7 @@ export default function Home() {
       commit: issueCommit,
     });
     const updated = await getIssues(currentProject!.id.toString());
-    setIssues(updated);
+    setIssues(updated?[]:[]);
     setIssueName("");
     setIssueDescription("");
     setIssueCommit("");
@@ -64,7 +64,7 @@ export default function Home() {
   const handleProjectSelect = async (project: Project) => {
     setCurrentProject(project);
     const fetched = await getIssues(project.id.toString());
-    setIssues(fetched);
+    setIssues(fetched?[]:[]);
   };
 
   async function handleIssueSelect(issue: Issue) {
