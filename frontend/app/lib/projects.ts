@@ -23,8 +23,8 @@ export async function getProjects(): Promise<Project[]> {
     return data;
 }
 
-export async function getProject(id: string): Promise<Project[]> {
-    const response = await fetch(`localhost:3000/projects/${id}`);
+export async function getProject(id: string): Promise<Project> {
+    const response = await fetch(`localhost:3000/project/${id}`);
     if (!response.ok) {
         throw new Error('Failed to fetch projects');
     }
