@@ -38,7 +38,7 @@ export default function Home() {
       commit: issueCommit,
     });
     const updated = await getIssues((currentProject!.id??"").toString());
-    setIssues(updated?[]:[]);
+    setIssues(updated);
     setIssueName("");
     setIssueDescription("");
     setIssueCommit("");
@@ -46,8 +46,8 @@ export default function Home() {
 
   const handleProjectSelect = async (project: Project) => {
     setCurrentProject(project);
-    const fetched = await getIssues((project.id??0).toString());
-    setIssues(fetched?[]:[]);
+    const fetched = await getIssues((project.id??"").toString());
+    setIssues(fetched);
   };
 
   async function handleIssueSelect(issue: Issue) {
