@@ -1,25 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import { addProject, getProjects } from "@/app/lib/projects";
-import { addIssue, getIssues } from "@/app/lib/issues";
+import { addProject, getProjects, Project } from "@/app/lib/projects";
+import { addIssue, getIssues, Issue } from "@/app/lib/issues";
 import { useRouter } from "next/navigation";
-
-type Project = {
-  id: number;
-  name: string;
-};
-
-type Issue = {
-  id: number;
-  project_id: number;
-  created_at: string;
-  resolved_at: string;
-  status: string;
-  title: string;
-  description: string;
-  commit: string;
-};
-
 
 export default function Home() {
   const [createProject, setCreateProject] = useState(false);
@@ -35,7 +18,7 @@ export default function Home() {
   useEffect(() => {
     async function fetchProjects() {
       const projects = await getProjects();
-      setProjects(projects?[]:[]);
+      setProjects(projects);
     }
     fetchProjects();
   }, []);
@@ -44,17 +27,17 @@ export default function Home() {
     await addProject(projectName);
     setCreateProject(false);
     const updated = await getProjects();
-    setProjects(updated?[]:[]);
+    setProjects(updated);
   }
 
   async function handleCreateIssue() {
     await addIssue({
-      project_id: currentProject!.id,
+      project_id: currentProject!.id??0,
       title: issueName,
       description: issueDescription,
       commit: issueCommit,
     });
-    const updated = await getIssues(currentProject!.id.toString());
+    const updated = await getIssues((currentProject!.id??"").toString());
     setIssues(updated?[]:[]);
     setIssueName("");
     setIssueDescription("");
@@ -63,7 +46,7 @@ export default function Home() {
 
   const handleProjectSelect = async (project: Project) => {
     setCurrentProject(project);
-    const fetched = await getIssues(project.id.toString());
+    const fetched = await getIssues((project.id??0).toString());
     setIssues(fetched?[]:[]);
   };
 
