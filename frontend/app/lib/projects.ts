@@ -1,5 +1,5 @@
 
-type Project = {
+export type Project = {
     name: string;
     id?: number
 }
@@ -24,7 +24,7 @@ export async function getProjects(): Promise<Project[]> {
 }
 
 export async function getProject(id: string): Promise<Project[]> {
-    const response = await fetch(`localhost:3000/projects/${id}`);
+    const response = await fetch(`http://localhost:3000/projects/${id}`);
     if (!response.ok) {
         throw new Error('Failed to fetch projects');
     }

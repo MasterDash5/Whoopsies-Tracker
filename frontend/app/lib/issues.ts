@@ -1,4 +1,4 @@
-type Issue = {
+export type Issue = {
     id?: number;
     project_id: number;
     created_at?: string;
