@@ -55,12 +55,9 @@ export default function Home() {
   }
 
   return (
-    <div className="flex min-h-screen justify-center">
-
-      <div className="flex flex-col items-center w-96 relative border-r-2">
-        <div className="w-full p-4 text-center border-b-2">
-          Projects tab
-        </div>
+    <div className="flex min-h-screen w-full bg-zinc-950 text-white">
+      <div className="w-80 border-r border-zinc-800 bg-zinc-950 flex flex-col">
+        <div className="p-6 text-sm font-medium text-zinc-400 border-b border-zinc-800">Projects</div>
 
         <div className="flex-1 overflow-y-auto">
           {projects.map((project) => (
