@@ -28,7 +28,6 @@ export async function updateIssue(issues: Issue): Promise<void> {
         },
         body: JSON.stringify(issues)
     });
-    
 }
 
 export async function getIssues(project_id: string): Promise<Issue[]> {
