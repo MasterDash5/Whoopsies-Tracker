@@ -28,7 +28,7 @@ type IssueFormsProps = {
         commit: issueCommit,
     });
     const updated = await getIssues((currentProject!.id??"").toString());
-    await setIssues(updated);
+    setIssues(updated);
     setIssueName("");
     setIssueDescription("");
     setIssueCommit("");
