@@ -13,6 +13,7 @@ export default function Home() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [currentProject, setCurrentProject] = useState<Project | null>(null);
   const [issues, setIssues] = useState<Issue[]>([]);
+  const [empty, setEmpty] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -24,6 +25,11 @@ export default function Home() {
   }, []);
 
   async function handleSubmit() {
+    if(projectName === "") {
+      setEmpty(true);
+      return
+    };
+    setEmpty(false);
     await addProject(projectName);
     setCreateProject(false);
     const updated = await getProjects();
@@ -31,6 +37,11 @@ export default function Home() {
   }
 
   async function handleCreateIssue() {
+    if(issueName === "" || issueDescription === "" || issueCommit === "") {
+      setEmpty(true);
+      return
+    };
+    setEmpty(false);
     await addIssue({
       project_id: currentProject!.id??0,
       title: issueName,
@@ -38,7 +49,7 @@ export default function Home() {
       commit: issueCommit,
     });
     const updated = await getIssues((currentProject!.id??"").toString());
-    setIssues(updated?[]:[]);
+    setIssues(updated);
     setIssueName("");
     setIssueDescription("");
     setIssueCommit("");
@@ -46,8 +57,8 @@ export default function Home() {
 
   const handleProjectSelect = async (project: Project) => {
     setCurrentProject(project);
-    const fetched = await getIssues((project.id??0).toString());
-    setIssues(fetched?[]:[]);
+    const fetched = await getIssues((project.id??"").toString());
+    setIssues(fetched);
   };
 
   async function handleIssueSelect(issue: Issue) {
@@ -107,6 +118,11 @@ export default function Home() {
             >
               Cancel
             </button>
+            {empty && (
+              <div className="mt-4 text-sm text-red-500">
+                Project name is required
+              </div>
+            )}
           </div>
         )}
 
@@ -144,6 +160,9 @@ export default function Home() {
                 >
                   Submit
                 </button>
+                {empty && (
+                  <p className="text-sm text-red-500 mt-2">Please fill in all the fields</p>
+                )}
               </div>
             </div>
 
