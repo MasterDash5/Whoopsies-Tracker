@@ -1,8 +1,8 @@
 export type Issue = {
     id?: number;
     project_id: number;
-    created_at?: string;
-    resolved_at?: string;
+    created_at?: Date;
+    resolved_at?: Date;
     status?: string;
     title: string;
     description: string;
@@ -10,7 +10,7 @@ export type Issue = {
 }
 
 export async function addIssue(issues: Issue): Promise<void> {
-    fetch('http://localhost:3000/issue', {
+    await fetch('http://localhost:3000/issue', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -21,7 +21,7 @@ export async function addIssue(issues: Issue): Promise<void> {
 
 
 export async function updateIssue(issues: Issue): Promise<void> {
-    fetch('http://localhost:3000/issues', {
+    await fetch('http://localhost:3000/issues', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -38,4 +38,8 @@ export async function getIssues(project_id: string): Promise<Issue[]> {
 export async function getIssue(id: string): Promise<Issue> {
     const response = await fetch(`http://localhost:3000/issue/${id}`);
     return await response.json();
+}
+
+export async function deleteIssue(id: string): Promise<void> {
+    await fetch(`http://localhost:3000/issue/${id}`, { method: 'DELETE' });
 }

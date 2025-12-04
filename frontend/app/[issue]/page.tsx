@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Project, getProject } from "@/app/lib/projects";
-import { Issue, getIssue, getIssues } from "@/app/lib/issues";
+import { Issue, getIssue, getIssues, updateIssue, deleteIssue } from "@/app/lib/issues";
 import IssueForms from "@/app/components/issue_forms";
 
 export default function Home() {
@@ -29,6 +29,29 @@ export default function Home() {
 
     async function handleIssueSelect(issue: Issue) {
         router.push(`/issue?id=${issue.id}`);
+    }
+
+    async function handleResolveIssue() {
+        const issue: Issue = {
+            id: currentIssue?.id,
+            project_id: (currentIssue?.project_id)??0,
+            created_at: currentIssue?.created_at,
+            resolved_at: new Date(),
+            status: "1",
+            title: (currentIssue?.title)??"",
+            description: (currentIssue?.description)??"",
+            commit: (currentIssue?.commit)??""
+        }
+
+        await updateIssue(issue);
+    }
+
+    async function handleDeleteIssue() {
+        if (currentIssue === null || currentIssue.id === null) {
+            return;
+        }
+
+        await deleteIssue(((currentIssue.id)??0).toFixed());
     }
 
     return (
@@ -57,20 +80,24 @@ export default function Home() {
                 + New Issue
                 </button>
             </div>
-            <div className="flex items-center justify-center w-full mt-16">
+            <div className="flex justify-center w-full">
                 {currentIssue !== null && currentProject !== null && (
-                    <div className="m-16 bg-zinc-900 border border-zinc-800 rounded-lg p-6 w-full h-full mb-32">
+                    <div className="m-16 bg-zinc-900 border border-zinc-800 rounded-lg p-6 w-full mb-32">
                         {currentIssue.title !== null && (
                             <div>
-                                <div className="flex justify-between rounded-lg p-3 bg-zinc-800">
-                                    <div className="rounded-md p-1">
+                                <div className="flex justify-between rounded-lg p-2 bg-zinc-800">
+                                    <div className="rounded-md p-2">
                                         <p className="text-s text-zinc-600">{currentProject.name} - {id}</p>
                                         <p className="text-3xl pt-3">{currentIssue.title}</p>
                                     </div>
-                                    <div className="justify-items-end rounded-md p-6">
+                                    <div className="justify-items-end rounded-md pr-1">
                                         <p>Created {new Date(currentIssue.created_at??"").toLocaleDateString()}</p>
                                         {currentIssue.resolved_at !== null && (<p>Resolved {new Date(currentIssue.resolved_at??"").toLocaleDateString()}</p>)}
                                         <p className="text-xs text-zinc-600">{currentIssue.commit}</p>
+                                        <div className="items center">
+                                            <button onClick={handleResolveIssue} className="bg-lime-700 border border-zinc-800 rounded-lg hover:border-zinc-700 m-2 p-1">Resolve</button>
+                                            <button onClick={handleDeleteIssue} className="bg-red-700 border border-zinc-800 rounded-lg hover:border-zinc-700 m-2 p-1">Delete</button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="p-16 w-full">
