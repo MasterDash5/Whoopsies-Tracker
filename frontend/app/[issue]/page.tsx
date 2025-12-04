@@ -58,34 +58,35 @@ export default function Home() {
                 </button>
             </div>
             <div className="flex items-center justify-center w-full mt-16">
-                <div className="m-16 bg-zinc-900 border border-zinc-800 rounded-lg p-6 mb-8 w-full h-full mb-32 relative">
-                    {currentIssue !== null && currentProject !== null && (
-                        <div>
-                            <div className="flex justify-between">
-                                <div>
-                                    <p>{currentProject.name} - {id}</p>
-                                    <p className="text-3xl">{currentIssue.title}</p>
+                {currentIssue !== null && currentProject !== null && (
+                    <div className="m-16 bg-zinc-900 border border-zinc-800 rounded-lg p-6 w-full h-full mb-32">
+                        {currentIssue.title !== null && (
+                            <div>
+                                <div className="flex justify-between border-1 border-white rounded-lg p-6">
+                                    <div className="rounded-md p-1">
+                                        <p className="text-3xl">{currentProject.name} - {id}</p>
+                                        <p className="text-2xl">{currentIssue.title}</p>
+                                    </div>
+                                    <div className="justify-items-end rounded-md p-6">
+                                        <p>Created ({new Date(currentIssue.created_at??"").toLocaleDateString()})</p>
+                                        {currentIssue.resolved_at !== null && (<p>{new Date(currentIssue.resolved_at??"").toLocaleDateString()}</p>)}
+                                        <p>{currentIssue.commit}</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p>Created ({new Date(currentIssue.created_at??"").toLocaleDateString()})</p>
-                                    {currentIssue.resolved_at !== null && (<p>{new Date(currentIssue.resolved_at??"").toLocaleDateString()}</p>)}
-                                    <p>{currentIssue.commit}</p>
+                                <div className="p-16 w-full">
+                                    <p>{currentIssue.description}</p>
+                                    <p>todo: attachments</p>
                                 </div>
                             </div>
-                            <div className="p-16 w-full">
-                                <p>{currentIssue.description}</p>
-                                <p>todo: attachments</p>
-                            </div>
-                        </div>
-                    )}
-                    {
-                        createIssue && (
-                            <><button className="absolute top-10 right-10 text-2xl" onClick={() => setCreateIssue(false)}>X</button>
-                            <IssueForms currentProject={currentProject} setIssues={setIssues} /></>
-                        )
-                    }
-
-                </div>
+                        )}
+                        {
+                            createIssue && (
+                                <><button className="absolute top-10 right-10 text-2xl" onClick={() => setCreateIssue(false)}>X</button>
+                                <IssueForms currentProject={currentProject} setIssues={setIssues} /></>
+                            )
+                        }
+                    </div>
+                )}
             </div>
         </div>
     );
