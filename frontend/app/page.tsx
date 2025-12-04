@@ -1,15 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
 import { addProject, getProjects, Project } from "@/app/lib/projects";
-import { addIssue, getIssues, Issue } from "@/app/lib/issues";
+import { getIssues, Issue } from "@/app/lib/issues";
 import { useRouter } from "next/navigation";
+import IssueForms from "@/app/components/issue_forms";
 
 export default function Home() {
   const [createProject, setCreateProject] = useState(false);
   const [projectName, setProjectName] = useState("");
-  const [issueName, setIssueName] = useState("");
-  const [issueDescription, setIssueDescription] = useState("");
-  const [issueCommit, setIssueCommit] = useState("");
   const [projects, setProjects] = useState<Project[]>([]);
   const [currentProject, setCurrentProject] = useState<Project | null>(null);
   const [issues, setIssues] = useState<Issue[]>([]);
@@ -34,25 +32,6 @@ export default function Home() {
     setCreateProject(false);
     const updated = await getProjects();
     setProjects(updated);
-  }
-
-  async function handleCreateIssue() {
-    if(issueName === "" || issueDescription === "" || issueCommit === "") {
-      setEmpty(true);
-      return
-    };
-    setEmpty(false);
-    await addIssue({
-      project_id: currentProject!.id??0,
-      title: issueName,
-      description: issueDescription,
-      commit: issueCommit,
-    });
-    const updated = await getIssues((currentProject!.id??"").toString());
-    setIssues(updated);
-    setIssueName("");
-    setIssueDescription("");
-    setIssueCommit("");
   }
 
   const handleProjectSelect = async (project: Project) => {
@@ -130,41 +109,7 @@ export default function Home() {
           <div className="max-w-3xl mx-auto">
             <h1 className="text-2xl font-medium mb-8">{currentProject.name}</h1>
 
-            <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 mb-8">
-              <h2 className="text-lg font-medium mb-4">New Issue</h2>
-              <div className="grid grid-cols-1 gap-3">
-                <input
-                  className="p-3 bg-zinc-950 border border-zinc-800 rounded-lg text-white placeholder:text-zinc-500 focus:outline-none focus:border-zinc-700"
-                  type="text"
-                  placeholder="Issue title"
-                  value={issueName}
-                  onChange={(e) => setIssueName(e.target.value)}
-                />
-                <input
-                  className="p-3 bg-zinc-950 border border-zinc-800 rounded-lg text-white placeholder:text-zinc-500 focus:outline-none focus:border-zinc-700"
-                  type="text"
-                  placeholder="Description"
-                  value={issueDescription}
-                  onChange={(e) => setIssueDescription(e.target.value)}
-                />
-                <input
-                  className="p-3 bg-zinc-950 border border-zinc-800 rounded-lg text-white placeholder:text-zinc-500 focus:outline-none focus:border-zinc-700"
-                  type="text"
-                  placeholder="Commit hash"
-                  value={issueCommit}
-                  onChange={(e) => setIssueCommit(e.target.value)}
-                />
-                <button
-                  onClick={handleCreateIssue}
-                  className="py-3 bg-white text-black font-medium rounded-lg hover:bg-zinc-200 transition"
-                >
-                  Submit
-                </button>
-                {empty && (
-                  <p className="text-sm text-red-500 mt-2">Please fill in all the fields</p>
-                )}
-              </div>
-            </div>
+            <IssueForms currentProject={currentProject} setIssues={setIssues} />
 
             <div className="space-y-3">
               {issues.map((issue) => (

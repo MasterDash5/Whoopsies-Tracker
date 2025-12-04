@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Project, getProject } from "@/app/lib/projects";
 import { Issue, getIssue, getIssues } from "@/app/lib/issues";
+import IssueForms from "@/app/components/issue_forms";
 
 export default function Home() {
     const params = useSearchParams();
@@ -12,6 +13,7 @@ export default function Home() {
     const [currentIssue, setCurrentIssue] = useState<Issue | null>(null);
     const [currentProject, setCurrentProject] = useState<Project | null>(null);
     const [issues, setIssues] = useState<Issue[]>([]);
+    const [createIssue, setCreateIssue] = useState(false);
 
     useEffect(() => {
         async function fetchIssue() {
@@ -49,7 +51,7 @@ export default function Home() {
                 </div>
 
                 <button
-                //onClick={() => setCreateIssue(true)}
+                onClick={() => setCreateIssue(true)}
                 className="m-4 p-3 bg-white text-black text-sm font-medium rounded-lg hover:bg-zinc-200 transition"
                 >
                 + New Issue
@@ -58,7 +60,7 @@ export default function Home() {
             <div className="flex items-center justify-center w-full mt-16">
                 {currentIssue !== null && currentProject !== null && (
                     <div className="m-16 bg-zinc-900 border border-zinc-800 rounded-lg p-6 w-full h-full mb-32">
-                        {currentIssue.title !== null ? (
+                        {currentIssue.title !== null && (
                             <div>
                                 <div className="flex justify-between border-1 border-white rounded-lg p-6">
                                     <div className="rounded-md p-1">
@@ -76,9 +78,13 @@ export default function Home() {
                                     <p>todo: attachments</p>
                                 </div>
                             </div>
-                        ) : (
-                            <div></div>
                         )}
+                        {
+                            createIssue && (
+                                <><button className="absolute top-10 right-10 text-2xl" onClick={() => setCreateIssue(false)}>X</button>
+                                <IssueForms currentProject={currentProject} setIssues={setIssues} /></>
+                            )
+                        }
                     </div>
                 )}
             </div>
