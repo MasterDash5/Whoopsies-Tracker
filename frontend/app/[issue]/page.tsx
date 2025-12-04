@@ -62,15 +62,15 @@ export default function Home() {
                     <div className="m-16 bg-zinc-900 border border-zinc-800 rounded-lg p-6 w-full h-full mb-32">
                         {currentIssue.title !== null && (
                             <div>
-                                <div className="flex justify-between border-1 border-white rounded-lg p-6">
+                                <div className="flex justify-between rounded-lg p-3 bg-zinc-800">
                                     <div className="rounded-md p-1">
-                                        <p className="text-3xl">{currentProject.name} - {id}</p>
-                                        <p className="text-2xl">{currentIssue.title}</p>
+                                        <p className="text-s text-zinc-600">{currentProject.name} - {id}</p>
+                                        <p className="text-3xl pt-3">{currentIssue.title}</p>
                                     </div>
                                     <div className="justify-items-end rounded-md p-6">
-                                        <p>Created ({new Date(currentIssue.created_at??"").toLocaleDateString()})</p>
-                                        {currentIssue.resolved_at !== null && (<p>{new Date(currentIssue.resolved_at??"").toLocaleDateString()}</p>)}
-                                        <p>{currentIssue.commit}</p>
+                                        <p>Created {new Date(currentIssue.created_at??"").toLocaleDateString()}</p>
+                                        {currentIssue.resolved_at !== null && (<p>Resolved {new Date(currentIssue.resolved_at??"").toLocaleDateString()}</p>)}
+                                        <p className="text-xs text-zinc-600">{currentIssue.commit}</p>
                                     </div>
                                 </div>
                                 <div className="p-16 w-full">
