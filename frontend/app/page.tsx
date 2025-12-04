@@ -62,7 +62,7 @@ export default function Home() {
   };
 
   async function handleIssueSelect(issue: Issue) {
-    router.push(`/${issue.id}`);
+    router.push(`/issue?id=${issue.id}`);
   }
 
   return (
