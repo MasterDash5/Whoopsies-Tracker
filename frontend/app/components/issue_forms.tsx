@@ -35,7 +35,7 @@ type IssueFormsProps = {
     }
 
     return (
-        <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 mb-8">
+        <div className="bg-zinc-800 border border-zinc-900 rounded-lg p-6 mb-8">
         <h2 className="text-lg font-medium mb-4">New Issue</h2>
         <div className="grid grid-cols-1 gap-3">
           <input

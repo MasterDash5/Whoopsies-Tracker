@@ -72,7 +72,7 @@ export default function Home() {
       </div>
 
       {/* MAIN CONTENT */}
-      <div className="flex-1 p-10 overflow-y-auto">
+      <div className="flex p-6 overflow-y-auto w-full flex-col justify-items-center">
         {createProject && (
           <div className="max-w-lg mx-auto bg-zinc-900 border border-zinc-800 rounded-lg p-8">
             <h2 className="text-xl font-medium mb-6">Create Project</h2>
@@ -106,21 +106,29 @@ export default function Home() {
         )}
 
         {currentProject && !createProject && (
-          <div className="max-w-3xl mx-auto">
-            <h1 className="text-2xl font-medium mb-8">{currentProject.name}</h1>
+          <div className="max-w flex m-16 flex-col p-6 bg-zinc-900 rounded-md">
+            <p className="text-3xl font-medium mb-8">{currentProject.name}</p>
+            <IssueForms currentProject={currentProject} setIssues={setIssues}/>
 
-            <IssueForms currentProject={currentProject} setIssues={setIssues} />
+            <div className="space-y-3 bg-zinc-900">
 
-            <div className="space-y-3">
               {issues.map((issue) => (
                 <div
                   key={issue.id}
-                  className="bg-zinc-900 border border-zinc-800 rounded-lg p-5 hover:border-zinc-700 transition cursor-pointer"
+                  className="border-zinc-600 rounded-lg p-6 border-1 hover:border-zinc-500 transition cursor-pointer bg-zinc-950 hover:bg-zinc-800"
                   onClick={() => handleIssueSelect(issue)}
                 >
-                  <div className="flex justify-between items-center mb-2">
-                    <h2 className="text-base font-medium">{issue.title}</h2>
-                    <span className="text-xs text-zinc-500">{issue.status}</span>
+                  <div className="flex justify-start items-center mb-2">
+                    <h2 className="text-base font-medium mr-2">{issue.title}</h2>
+
+                      <div>
+                          {issue.status == 0 ? (
+                              <div className="bg-rose-400 aspect-square w-full h-2 rounded-sm"></div>
+                          ) : (
+                              <div className="bg-lime-400 aspect-square w-full h-2 rounded-sm"></div>
+                          )}
+                      </div>
+
                   </div>
                   <p className="text-sm text-zinc-400 mb-2">{issue.description}</p>
                   <p className="text-xs text-zinc-600">Commit: {issue.commit}</p>
