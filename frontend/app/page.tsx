@@ -74,7 +74,7 @@ export default function Home() {
       {/* MAIN CONTENT */}
       <div className="flex p-6 overflow-y-auto w-full flex-col justify-items-center">
         {createProject && (
-          <div className="max-w-lg mx-auto bg-zinc-900 border border-zinc-800 rounded-lg p-8">
+          <div className="max-w mx-auto bg-zinc-900 border border-zinc-800 rounded-lg p-8 align-middle">
             <h2 className="text-xl font-medium mb-6">Create Project</h2>
             <div className="flex flex-col space-y-4">
               <input
@@ -105,8 +105,10 @@ export default function Home() {
           </div>
         )}
 
-        {currentProject && !createProject && (
-          <div className="max-w flex m-16 flex-col p-6 bg-zinc-900 rounded-md">
+        {currentProject && (
+          <div className={`max-w flex m-16 flex-col p-6 bg-zinc-900 rounded-md ${
+              createProject ? 'blur-2xl' : ''
+          }`}>
             <p className="text-3xl font-medium mb-8">{currentProject.name}</p>
             <IssueForms currentProject={currentProject} setIssues={setIssues}/>
 
