@@ -60,6 +60,10 @@ app.put("/issue/:id", async (req: Request, res: Response) => {
     });
 });
 
+app.delete("/issue/:id", async (req: Request, res: Response) => {
+    await dal.removeIssue(req.params.id);
+});
+
 app.listen(port, () => {
     console.log("ExpressJS started");
 });

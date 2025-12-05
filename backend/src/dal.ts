@@ -76,3 +76,7 @@ export async function setIssue(issue: Issue): Promise<void> {
     delete issue.created_at;
     await supabase.from('issue').update(issue);
 }
+
+export async function removeIssue(id: string): Promise<void> {
+    await supabase.from('issue').delete().eq("id", id);
+}

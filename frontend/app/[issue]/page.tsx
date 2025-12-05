@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Project, getProject } from "@/app/lib/projects";
-import { Issue, getIssue, getIssues } from "@/app/lib/issues";
+import { Issue, getIssue, getIssues, updateIssue, deleteIssue } from "@/app/lib/issues";
 import IssueForms from "@/app/components/issue_forms";
 
 export default function Home() {
@@ -29,6 +29,29 @@ export default function Home() {
 
     async function handleIssueSelect(issue: Issue) {
         router.push(`/issue?id=${issue.id}`);
+    }
+
+    async function handleResolveIssue() {
+        const issue: Issue = {
+            id: currentIssue?.id,
+            project_id: (currentIssue?.project_id)??0,
+            created_at: currentIssue?.created_at,
+            resolved_at: new Date(),
+            status: "1",
+            title: (currentIssue?.title)??"",
+            description: (currentIssue?.description)??"",
+            commit: (currentIssue?.commit)??""
+        }
+
+        await updateIssue(issue);
+    }
+
+    async function handleDeleteIssue() {
+        if (currentIssue === null || currentIssue.id === null) {
+            return;
+        }
+
+        await deleteIssue(((currentIssue.id)??0).toFixed());
     }
 
     return (
@@ -68,9 +91,13 @@ export default function Home() {
                                     <p className="text-3xl">{currentIssue.title}</p>
                                 </div>
                                 <div className="justify-items-end rounded-md p-6">
-                                    <p className="text-s text-zinc-600">{currentIssue.commit}</p>
                                     <p>Created {new Date(currentIssue.created_at??"").toLocaleDateString()}</p>
                                     {currentIssue.resolved_at !== null && (<p>Resolved {new Date(currentIssue.resolved_at??"").toLocaleDateString()}</p>)}
+                                    <p className="text-s text-zinc-600">{currentIssue.commit}</p>
+                                    <div className="items center">
+                                        <button onClick={handleResolveIssue} className="bg-lime-700 border border-zinc-800 rounded-lg hover:border-zinc-700 m-2 p-1">Resolve</button>
+                                        <button onClick={handleDeleteIssue} className="bg-red-700 border border-zinc-800 rounded-lg hover:border-zinc-700 m-2 p-1">Delete</button>
+                                    </div>
                                 </div>
                             </div>
                             <div className="p-6 w-full rounded-md mt-3 flex flex-col bg-zinc-950">
