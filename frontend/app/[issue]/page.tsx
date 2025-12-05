@@ -43,8 +43,7 @@ export default function Home() {
                     onClick={() => handleIssueSelect(issue)}
                     className={`w-full text-left px-6 py-3 text-sm border-b border-zinc-800 hover:bg-zinc-900 transition ${
                         currentIssue?.id === issue.id ? 'bg-zinc-900' : ''
-                    }`}
-                    >
+                    }`}>
                     {issue.title}
                     </button>
                 ))}
@@ -57,36 +56,42 @@ export default function Home() {
                 + New Issue
                 </button>
             </div>
-            <div className="flex items-center justify-center w-full mt-16">
-                <div className="m-16 bg-zinc-900 border border-zinc-800 rounded-lg p-6 mb-8 w-full h-full mb-32 relative">
-                    {currentIssue !== null && currentProject !== null && (
+            <div className="items-center justify-center w-full mt-16 h-min flex">
+                {currentIssue !== null && currentProject !== null && (
+                    <div className={`m-16 bg-zinc-900 border-zinc-800 rounded-lg p-6 w-full h-full mb-32 ${
+                        createIssue ? 'blur-2xl' : ''
+                    }`}>
                         <div>
-                            <div className="flex justify-between">
-                                <div>
-                                    <p>{currentProject.name} - {id}</p>
+                            <div className="flex justify-between rounded-lg bg-zinc-800">
+                                <div className="justify-items-start rounded-md p-6">
+                                    <p className="text-s text-zinc-600">{currentProject.name} - {id}</p>
                                     <p className="text-3xl">{currentIssue.title}</p>
                                 </div>
-                                <div>
-                                    <p>Created ({new Date(currentIssue.created_at??"").toLocaleDateString()})</p>
-                                    {currentIssue.resolved_at !== null && (<p>{new Date(currentIssue.resolved_at??"").toLocaleDateString()}</p>)}
-                                    <p>{currentIssue.commit}</p>
+                                <div className="justify-items-end rounded-md p-6">
+                                    <p className="text-s text-zinc-600">{currentIssue.commit}</p>
+                                    <p>Created {new Date(currentIssue.created_at??"").toLocaleDateString()}</p>
+                                    {currentIssue.resolved_at !== null && (<p>Resolved {new Date(currentIssue.resolved_at??"").toLocaleDateString()}</p>)}
                                 </div>
                             </div>
-                            <div className="p-16 w-full">
+                            <div className="p-6 w-full rounded-md mt-3 flex flex-col bg-zinc-950">
                                 <p>{currentIssue.description}</p>
-                                <p>todo: attachments</p>
                             </div>
                         </div>
-                    )}
+                    </div>
+                )}
+                <div className="z-20 absolute backdrop-blur-2xl">
                     {
                         createIssue && (
                             <><button className="absolute top-10 right-10 text-2xl" onClick={() => setCreateIssue(false)}>X</button>
-                            <IssueForms currentProject={currentProject} setIssues={setIssues} /></>
+                                <IssueForms currentProject={currentProject} setIssues={setIssues} /></>
                         )
                     }
-
                 </div>
+
             </div>
+
+
+
         </div>
     );
 }
