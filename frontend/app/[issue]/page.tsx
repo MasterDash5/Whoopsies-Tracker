@@ -82,7 +82,7 @@ export default function Home() {
             </div>
             <div className="flex justify-center w-full">
                 {currentIssue !== null && currentProject !== null && (
-                    <div className="m-16 bg-zinc-900 border border-zinc-800 rounded-lg p-6 w-full mb-32">
+                    <div className="m-16 bg-zinc-900 border border-zinc-800 rounded-lg p-6 w-full">
                         {currentIssue.title !== null && (
                             <div>
                                 <div className="flex justify-between rounded-lg p-2 bg-zinc-800">
@@ -100,9 +100,8 @@ export default function Home() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="p-16 w-full">
+                                <div className="p-8 pt-16 w-full">
                                     <p>{currentIssue.description}</p>
-                                    <p>todo: attachments</p>
                                 </div>
                             </div>
                         )}
