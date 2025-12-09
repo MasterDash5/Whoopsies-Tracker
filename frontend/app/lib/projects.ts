@@ -5,7 +5,7 @@ export type Project = {
 }
 
 export async function addProject(name: string): Promise<void> {
-    await fetch('http://localhost:3000/project', {
+    await fetch('http://localhost:3001/project', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -15,7 +15,7 @@ export async function addProject(name: string): Promise<void> {
 }
 
 export async function getProjects(): Promise<Project[]> {
-    const response = await fetch('http://localhost:3000/projects');
+    const response = await fetch('http://localhost:3001/projects');
     if (!response.ok) {
         throw new Error('Failed to fetch projects');
     }
@@ -24,7 +24,7 @@ export async function getProjects(): Promise<Project[]> {
 }
 
 export async function getProject(id: string): Promise<Project> {
-    const response = await fetch(`http://localhost:3000/project/${id}`);
+    const response = await fetch(`http://localhost:3001/project/${id}`);
     if (!response.ok) {
         throw new Error('Failed to fetch project');
     }

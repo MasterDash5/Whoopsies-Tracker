@@ -10,7 +10,7 @@ export type Issue = {
 }
 
 export async function addIssue(issues: Issue): Promise<void> {
-    await fetch('http://localhost:3000/issue', {
+    await fetch('http://localhost:3001/issue', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -21,7 +21,7 @@ export async function addIssue(issues: Issue): Promise<void> {
 
 
 export async function updateIssue(issues: Issue): Promise<void> {
-    await fetch('http://localhost:3000/issues', {
+    await fetch('http://localhost:3001/issues', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -31,15 +31,15 @@ export async function updateIssue(issues: Issue): Promise<void> {
 }
 
 export async function getIssues(project_id: string): Promise<Issue[]> {
-    const response = await fetch(`http://localhost:3000/issues/${project_id}`);
+    const response = await fetch(`http://localhost:3001/issues/${project_id}`);
     return await response.json();
 }
 
 export async function getIssue(id: string): Promise<Issue> {
-    const response = await fetch(`http://localhost:3000/issue/${id}`);
+    const response = await fetch(`http://localhost:3001/issue/${id}`);
     return await response.json();
 }
 
 export async function deleteIssue(id: string): Promise<void> {
-    await fetch(`http://localhost:3000/issue/${id}`, { method: 'DELETE' });
+    await fetch(`http://localhost:3001/issue/${id}`, { method: 'DELETE' });
 }
