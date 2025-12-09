@@ -4,10 +4,10 @@ import * as dal from "./dal"
 const cors = require("cors");
 
 const app = express();
-const port: number = 3000;
+const port: number = 3001;
 
 app.use(bodyParser.json());
-app.use(cors({ origin: "http://localhost:3001" }));
+app.use(cors({ origin: "http://localhost:3000" }));
 
 app.use(cors()); 
 
