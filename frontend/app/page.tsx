@@ -44,7 +44,8 @@ export default function Home() {
     router.push(`/issue?id=${issue.id}`);
   }
 
-  return (
+  // @ts-ignore
+    return (
     <div className="flex min-h-screen w-full bg-zinc-950 text-white">
       <div className="w-80 border-r border-zinc-800 bg-zinc-950 flex flex-col">
         <div className="p-6 text-sm font-medium text-zinc-400 border-b border-zinc-800">Projects</div>
@@ -72,40 +73,12 @@ export default function Home() {
       </div>
 
       {/* MAIN CONTENT */}
-      <div className="flex p-6 overflow-y-auto w-full flex-col justify-items-center">
-        {createProject && (
-          <div className="max-w-lg mx-auto bg-zinc-900 border border-zinc-800 rounded-lg p-8">
-            <h2 className="text-xl font-medium mb-6">Create Project</h2>
-            <div className="flex flex-col space-y-4">
-              <input
-                className="p-3 bg-zinc-950 border border-zinc-800 rounded-lg text-white placeholder:text-zinc-500 focus:outline-none focus:border-zinc-700"
-                type="text"
-                placeholder="Project name"
-                value={projectName}
-                onChange={(e) => setProjectName(e.target.value)}
-              />
-              <button
-                onClick={handleSubmit}
-                className="py-3 bg-white text-black font-medium rounded-lg hover:bg-zinc-200 transition"
-              >
-                Submit
-              </button>
-            </div>
-            <button
-              className="mt-4 text-sm text-zinc-500 hover:text-white transition"
-              onClick={() => setCreateProject(false)}
-            >
-              Cancel
-            </button>
-            {empty && (
-              <div className="mt-4 text-sm text-red-500">
-                Project name is required
-              </div>
-            )}
-          </div>
-        )}
+      <div className={`flex p-6 overflow-y-auto w-full flex-col justify-items-center ${
+          createProject ? 'blur-2xl' : ''
+      }`}>
 
-        {currentProject && !createProject && (
+
+        {currentProject && (
           <div className="max-w flex m-16 flex-col p-6 bg-zinc-900 rounded-md">
             <p className="text-3xl font-medium mb-8">{currentProject.name}</p>
             <IssueForms currentProject={currentProject} setIssues={setIssues}/>
@@ -138,6 +111,38 @@ export default function Home() {
           </div>
         )}
       </div>
+        {createProject && (
+            <div className="bg-zinc-800 rounded-lg p-6 mb-8 absolute justify-items-center top-1/3 left-1/2 backdrop-blur-2xl">
+                <h2 className="text-xl font-medium mb-6">Create Project</h2>
+                <div className="grid grid-cols-1 gap-3">
+                    <input
+                        className="p-3 bg-zinc-950  rounded-lg text-white placeholder:text-zinc-500 focus:outline-none focus:border-zinc-700"
+                        type="text"
+                        placeholder="Project name"
+                        value={projectName}
+                        onChange={(e) => setProjectName(e.target.value)}
+                    />
+                    <button
+                        onClick={handleSubmit}
+                        className="p-3 bg-lime-400 text-black font-medium rounded-lg hover:bg-lime-200 transition"
+                    >
+                        Submit
+                    </button>
+                </div>
+                <button
+                    className="z-20 text-2xl absolute -top-10 -right-10 bg-rose-400 hover:bg-rose-200 transition aspect-square rounded-lg w-min pl-3 pr-3"
+                    onClick={() => setCreateProject(false)}
+                >
+                    X
+                </button>
+                {empty && (
+                    <div className="mt-4 text-sm text-red-500">
+                        Project name is required
+                    </div>
+                )}
+            </div>
+        )}
     </div>
+
   );
 }

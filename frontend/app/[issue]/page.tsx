@@ -86,30 +86,35 @@ export default function Home() {
                     }`}>
                         <div>
                             <div className="flex justify-between rounded-lg bg-zinc-800">
-                                <div className="justify-items-start rounded-md p-6">
-                                    <p className="text-s text-zinc-600">{currentProject.name} - {id}</p>
+                                <div className="justify-items-start rounded-lg p-6">
+                                    <p className="text-s text-zinc-600 align-text-bottom">{currentProject.name} - {id}</p>
                                     <p className="text-3xl">{currentIssue.title}</p>
                                 </div>
-                                <div className="justify-items-end rounded-md p-6">
-                                    <p>Created {new Date(currentIssue.created_at??"").toLocaleDateString()}</p>
+                                <div className="flex justify-items-center rounded-lg p-6">
+                                    <p className="text-lg text-zinc-600">{currentIssue.commit}</p>
+                                </div>
+                                <div className="justify-items-end rounded-lg p-6">
+                                    <p className="text-zinc-600">Created {new Date(currentIssue.created_at??"").toLocaleDateString()}</p>
                                     {currentIssue.resolved_at !== null && (<p>Resolved {new Date(currentIssue.resolved_at??"").toLocaleDateString()}</p>)}
-                                    <p className="text-s text-zinc-600">{currentIssue.commit}</p>
-                                    <div className="items center">
-                                        <button onClick={handleResolveIssue} className="bg-lime-700 border border-zinc-800 rounded-lg hover:border-zinc-700 m-2 p-1">Resolve</button>
-                                        <button onClick={handleDeleteIssue} className="bg-red-700 border border-zinc-800 rounded-lg hover:border-zinc-700 m-2 p-1">Delete</button>
+
+                                    <div className="justify-evenly w-full flex flex-row  rounded-lg">
+                                        <button onClick={handleResolveIssue} className="bg-lime-400 rounded-lg hover:bg-lime-200 text-zinc-900 transition p-2 mr-2">Resolve</button>
+                                        <button onClick={handleDeleteIssue} className="bg-rose-400 rounded-lg hover:bg-rose-200 text-zinc-900 transition p-2">Delete</button>
                                     </div>
+
                                 </div>
                             </div>
-                            <div className="p-6 w-full rounded-md mt-3 flex flex-col bg-zinc-950">
+                            <div className="p-6 w-full mt-3 flex flex-col bg-zinc-950 rounded-lg">
                                 <p>{currentIssue.description}</p>
                             </div>
+
                         </div>
                     </div>
                 )}
-                <div className="z-20 absolute backdrop-blur-2xl">
+                <div className="z-20 absolute backdrop-blur-2xl bg-none rounded-lg">
                     {
                         createIssue && (
-                            <><button className="absolute top-10 right-10 text-2xl" onClick={() => setCreateIssue(false)}>X</button>
+                            <><button className="text-2xl absolute -top-10 -right-10 bg-rose-400 aspect-square rounded-lg w-min pl-3 pr-3" onClick={() => setCreateIssue(false)}>X</button>
                                 <IssueForms currentProject={currentProject} setIssues={setIssues} /></>
                         )
                     }

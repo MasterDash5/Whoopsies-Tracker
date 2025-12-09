@@ -35,7 +35,7 @@ type IssueFormsProps = {
     }
 
     return (
-        <div className="bg-zinc-800 border border-zinc-900 rounded-lg p-6 mb-8">
+        <div className="bg-zinc-800 rounded-lg p-6 mb-8">
         <h2 className="text-lg font-medium mb-4">New Issue</h2>
         <div className="grid grid-cols-1 gap-3">
           <input
@@ -61,12 +61,12 @@ type IssueFormsProps = {
           />
           <button
             onClick={handleCreateIssue}
-            className="py-3 bg-white text-black font-medium rounded-lg hover:bg-zinc-200 transition"
+            className="p-3 bg-lime-400 text-black font-medium rounded-lg hover:bg-lime-200 transition"
           >
             Submit
           </button>
           {empty && (
-            <p className="text-sm text-red-500 mt-2">Please fill in all the fields</p>
+            <p className="text-sm text-rose-400 mt-3">Please fill in all the fields</p>
           )}
         </div>
       </div>
